@@ -9,15 +9,29 @@ Working with BigData requires re-thinking how you work on the Salesforce platfor
 
 As a result, it's better to think of BigData as a [data lake](https://en.wikipedia.org/wiki/Data_lake), where massive amounts of data can be processed asynchronously to meet any of the above use cases.
 
-![alt tag] (https://raw.github.com/atorman/asyncSOQL/master/dataLake.png)
+![alt tag] (https://raw.github.com/atorman/asyncSOQL/master/img/dataLake.png)
 
-In the more concrete case of user login events which we now store in the Salesforce equivelent of BigData called a BigObject, it becomes important to understand how to work with the data at scale, especially since not all capabilities that we've come to expect like operational reports or workflow will be possible with a BigObject. It's a trade off of scale for limited platform capabilities.
+In the more concrete case of user login events which we now store in the Salesforce equivelent of BigData called a BigObject, it becomes important to understand how to work with the data at scale. This is especially important since not all capabilities that we've come to expect on the Salesforce platform, like operational reports or workflow, will be possible with a BigObject. It's a trade off for scale with limited platform capabilities.
+
+![alt tag] (https://raw.github.com/atorman/asyncSOQL/master/img/LoginEvents.png)
 
 For instance, rather than querying the BigObject using a convention like synchronous SOQL via the API for use in real-time applications, it's better to use a new convention called asynchronous SOQL which is now in pilot. 
 
-![alt tag] (https://raw.github.com/atorman/asyncSOQL/master/LoginEvents.png)
+[Asynchronous SOQL](http://docs.releasenotes.salesforce.com/en-us/winter16/release-notes/rn_general_async_query.htm) is similar to the Bulk API in the way it's job based. But instead of full CRUD capabilities primarily to work with the data off-platform, asynchronous SOQL provides query-and-insert capability to retreive sets of data and insert it into a structured object. Currently, this means moving data between BigObjects and custom objects on the platform.
 
-For instance, you may want to create a subset or reduced set of data every hour, daily, or weekly in order to have the full transactionality of the Salesforce platform at your fingertips.
+For instance, you may want to create a subset or reduced set of data every hour, daily, or weekly in order to have the full transactionality of the Salesforce platform at your fingertips. With this design pattern, we can use scheduled and batch apex to migrate subsets of data from a BigObject into custom objects. For instance, the ability to extract last week's worth of LoginEvents in order to report on it.
+
+![alt tag] (https://raw.github.com/atorman/asyncSOQL/master/img/timeline.png)
+
+As a result, it's now possible to report on it using operational reports:
+
+![alt tag] (https://raw.github.com/atorman/asyncSOQL/master/img/report.png)
+
+or with Wave for advanced exploratory capabilities:
+
+![alt tag] (https://raw.github.com/atorman/asyncSOQL/master/img/LoginForensics.png)
+
+
 
 ## Installation
 
@@ -37,7 +51,7 @@ To run the scheduled jobs, you must assign the correct permissions to the user. 
 
 Remote Site Settings
 
-![alt tag] (https://raw.github.com/atorman/asyncSOQL/master/samplePage.png)
+![alt tag] (https://raw.github.com/atorman/asyncSOQL/master/img/samplePage.png)
 
 Session Settings
 
